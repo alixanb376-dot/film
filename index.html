@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Двор. Пожиратель магии</title>
+<meta name="description" content="Мультсериал в 14 сериях: три пацана из панельного двора проваливаются через гараж №13 в пиксельный мир магии. Смотреть онлайн.">
+<meta name="theme-color" content="#0f0a1e">
+<meta property="og:title" content="Двор. Пожиратель магии">
+<meta property="og:description" content="14 серий про двор, дружбу и древнее зло. Смотреть онлайн.">
+<meta property="og:image" content="ep/ep01.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23201238'/%3E%3Cpath d='M12 9l12 7-12 7z' fill='%23ffd166'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#0f0a1e;--panel:#1a1230;--panel2:#241945;--line:#352a5c;--text:#f1ecff;--muted:#a79dc9;--accent:#ffd166;--accent2:#b57bff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#2a1a5e 0%,transparent 60%),var(--bg);color:var(--text);
+  font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+.wrap{max-width:1180px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left)) 40px}
+header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:4px 0 14px}
+h1{font-size:clamp(22px,4vw,34px);margin:0}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.player{position:relative;background:#000;border-radius:14px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+video{width:100%;height:100%;display:block;background:#000}
+.cover{position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat;display:flex;align-items:center;justify-content:center}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(10,5,25,.8))}
+.playbtn{position:relative;z-index:1;width:84px;height:84px;border-radius:50%;background:var(--accent);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,209,102,.25);transition:transform .15s}
+.cover:hover .playbtn,.cover:focus-visible .playbtn{transform:scale(1.08)}
+.playbtn svg{width:34px;height:34px;fill:#2a1a00;margin-left:5px}
+.coverTxt{position:absolute;z-index:1;left:12px;right:12px;bottom:14px;text-align:center;font-size:15px;font-weight:600}
+.hidden{display:none!important}
+.spin{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.spin i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(255,255,255,.25);border-top-color:var(--accent);animation:r .9s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+.title{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin:14px 0 4px}
+.title h2{margin:0;font-size:20px}
+.title small{color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--muted);padding:9px 14px;font:inherit;font-size:14px;cursor:pointer;min-height:42px}
+.seg button[aria-pressed=true]{background:var(--accent2);color:#1b0b3a;font-weight:600}
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 14px;font:inherit;font-size:14px;cursor:pointer;min-height:42px}
+.btn:disabled{opacity:.4;cursor:default}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.info{color:var(--muted);font-size:13px;margin-top:10px}
+.info b{color:var(--text);font-weight:600}
+.err{color:#ff9b9b;margin-top:10px;font-size:14px}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+aside h2{font-size:14px;margin:0;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--muted);letter-spacing:.4px;text-transform:uppercase}
+#eps{list-style:none;margin:0;padding:0;max-height:640px;overflow:auto}
+@media(max-width:900px){#eps{max-height:none}}
+#eps button{display:flex;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(53,42,92,.6);color:var(--text);padding:10px 12px;font:inherit;cursor:pointer;align-items:center;min-height:64px}
+#eps button:hover{background:var(--panel2)}
+#eps button:focus-visible{outline-offset:-2px}
+#eps li.cur button{background:var(--panel2);box-shadow:inset 3px 0 var(--accent)}
+#eps img{width:92px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#000;flex:none}
+#eps .t{display:block;font-size:14px;font-weight:600}
+#eps .m{display:block;font-size:12px;color:var(--muted)}
+#eps .bar2{display:block;height:3px;background:var(--line);border-radius:2px;margin-top:5px;overflow:hidden}
+#eps .bar2 i{display:block;height:100%;background:var(--accent)}
+.note{margin-top:20px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:14px}
+.note b{color:var(--text)}
+footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
+@media(prefers-reduced-motion:reduce){.spin i{animation-duration:3s}.playbtn{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Двор. <span>Пожиратель магии</span></h1>
+    <div class="sub">Мультсериал · 14 серий · 2 часа · русская озвучка и субтитры</div>
+  </header>
+  <div class="grid">
+    <main>
+      <div class="player" id="player">
+        <video id="v" playsinline preload="none" controls></video>
+        <button class="cover" id="cover" aria-label="Смотреть"><span class="playbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg></span><span class="coverTxt" id="coverTxt">Смотреть</span></button>
+        <div class="spin hidden" id="spin"><i></i></div>
+      </div>
+      <div class="title"><h2 id="curTitle">Серия 1</h2><small id="curMeta"></small></div>
+      <div class="bar">
+        <button class="btn" id="prev">← Назад</button>
+        <button class="btn" id="next">Дальше →</button>
+      </div>
+      <div class="info" id="info"></div>
+      <div class="err hidden" id="err"></div>
+      <div class="note"><b>Как смотреть.</b> Серии короткие (5–12 минут) и лёгкие, поэтому грузятся быстро даже на слабом интернете: можно ставить на паузу и дать видео догрузиться.
+        Следующая серия включается сама, а плеер запоминает, где ты остановился.
+        <b>Клавиши:</b> пробел, ← → (±10 с), F (во весь экран), M (звук).</div>
+    </main>
+    <aside><h2>Серии</h2><ol id="eps"></ol></aside>
+  </div>
+  <footer>Сценарий, анимация и музыка созданы Claude · голоса: RHVoice</footer>
+</div>
+<script>
+(function(){
+  var v=document.getElementById("v"),cover=document.getElementById("cover"),spin=document.getElementById("spin"),err=document.getElementById("err");
+  var list=document.getElementById("eps"),eps=[],cur=0,started=false,pos={};
+  function p2(n){return n<10?"0"+n:""+n}
+  function fmt(t){t=Math.max(0,Math.floor(t));var m=Math.floor(t/60),s=t%60;return m+":"+p2(s)}
+  function sv(k,x){try{localStorage.setItem(k,x)}catch(e){}}
+  function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  try{pos=JSON.parse(ld("dvor-pos-v2")||"{}")}catch(e){pos={}}
+  var info=document.getElementById("info");
+
+  function src(i){return "ep/ep"+p2(eps[i].n)+".mp4"}
+  function paintQ(){
+    info.innerHTML="Эта серия: <b>"+eps[cur].title+"</b>, "+fmt(eps[cur].dur)+" мин, примерно <b>"+eps[cur].mb+" МБ</b> (480p). Видео играет сразу и догружается по ходу просмотра.";
+  }
+  function paintList(){
+    [].forEach.call(list.children,function(li,i){
+      li.classList.toggle("cur",i===cur);
+      var p=pos[eps[i].n]||0,w=Math.min(100,p/eps[i].dur*100);
+      li.querySelector(".bar2 i").style.width=(w>2?w:0)+"%";
+    });
+  }
+  function select(i,at,autoplay){
+    cur=i;var e=eps[i];
+    document.getElementById("curTitle").textContent="Серия "+e.n+". "+e.title;
+    document.getElementById("curMeta").textContent=fmt(e.dur)+" мин";
+    document.getElementById("prev").disabled=i===0;
+    document.getElementById("next").disabled=i===eps.length-1;
+    v.poster="ep/ep"+p2(e.n)+".jpg";
+    paintQ();paintList();
+    try{history.replaceState(null,"","#"+e.n)}catch(x){}
+    if(started||autoplay){
+      started=true;cover.classList.add("hidden");spin.classList.remove("hidden");
+      v.src=src(i);
+      v.addEventListener("loadedmetadata",function f(){v.removeEventListener("loadedmetadata",f);if(at>1&&at<e.dur-5)v.currentTime=at},{once:true});
+      v.play().catch(function(){});
+    }else{
+      cover.style.backgroundImage="url(ep/ep"+p2(e.n)+".jpg)";
+      var p=pos[e.n]||0;
+      document.getElementById("coverTxt").textContent=p>20&&p<e.dur-10?"Продолжить с "+fmt(p):"Смотреть серию "+e.n;
+    }
+  }
+  function startPlay(){var p=pos[eps[cur].n]||0;started=true;select(cur,p>20&&p<eps[cur].dur-10?p:0,true)}
+  cover.onclick=startPlay;
+  document.getElementById("next").onclick=function(){if(cur<eps.length-1){started=true;select(cur+1,0,true)}};
+  document.getElementById("prev").onclick=function(){if(cur>0){started=true;select(cur-1,0,true)}};
+
+  var last=0;
+  v.addEventListener("timeupdate",function(){
+    var n=Date.now();
+    if(n-last>4000&&v.currentTime>3){last=n;pos[eps[cur].n]=v.currentTime;sv("dvor-pos-v2",JSON.stringify(pos));paintList()}
+  });
+  v.addEventListener("waiting",function(){spin.classList.remove("hidden")});
+  ["playing","canplay","seeked"].forEach(function(n){v.addEventListener(n,function(){spin.classList.add("hidden")})});
+  v.addEventListener("ended",function(){pos[eps[cur].n]=0;sv("dvor-pos-v2",JSON.stringify(pos));
+    if(cur<eps.length-1)select(cur+1,0,true)});
+  v.addEventListener("error",function(){spin.classList.add("hidden");err.textContent="Серия не загрузилась. Проверь интернет и нажми воспроизведение ещё раз.";err.classList.remove("hidden")});
+  v.addEventListener("playing",function(){err.classList.add("hidden")});
+  document.addEventListener("keydown",function(e){
+    if(!started||e.target.tagName==="BUTTON"&&e.key===" ")return;
+    if(e.key===" "){e.preventDefault();v.paused?v.play():v.pause()}
+    else if(e.key==="ArrowRight")v.currentTime+=10;
+    else if(e.key==="ArrowLeft")v.currentTime-=10;
+    else if(e.key==="m"||e.key==="M")v.muted=!v.muted;
+    else if(e.key==="f"||e.key==="F"){var pl=document.getElementById("player");document.fullscreenElement?document.exitFullscreen():pl.requestFullscreen&&pl.requestFullscreen()}
+  });
+
+  fetch("episodes.json").then(function(r){return r.json()}).then(function(d){
+    eps=d;
+    d.forEach(function(e,i){
+      var li=document.createElement("li"),b=document.createElement("button");
+      b.innerHTML='<img alt="" loading="lazy" src="ep/ep'+p2(e.n)+'.jpg"><span><span class="t"></span><span class="m"></span><span class="bar2"><i></i></span></span>';
+      b.querySelector(".t").textContent=e.n+". "+e.title;
+      b.querySelector(".m").textContent=fmt(e.dur)+" мин";
+      b.onclick=function(){var p=pos[e.n]||0;started=true;select(i,p>20&&p<e.dur-10?p:0,true);window.scrollTo({top:0,behavior:"smooth"})};
+      li.appendChild(b);list.appendChild(li);
+    });
+    var h=parseInt((location.hash||"").slice(1),10),start=0;
+    if(h>=1&&h<=d.length)start=h-1;
+    else{for(var i=d.length-1;i>=0;i--){if(pos[d[i].n]>20){start=i;break}}}
+    select(start,0,false);
+  }).catch(function(){err.textContent="Не удалось загрузить список серий.";err.classList.remove("hidden")});
+})();
+</script>
+</body>
+</html>
